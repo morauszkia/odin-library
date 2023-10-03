@@ -25,13 +25,11 @@
                 <input type="text" id="cover-url" name="cover-url" class="">
                 <label for="pages">Number of pages</label>
                 <input type="number" min="1" id="pages" name="pages" class="">
-                <label for="status">Status</label>
-                <select name="status" id="status">
-                    <option value="unread">Unread</option>
-                    <option value="tbr">To Be Read</option>
-                    <option value="tbr">Currently Reading</option>
-                    <option value="tbr">Read</option>
-                </select>
+                <fieldset>
+                    <legend for="status">Status</legend>
+                    <label for="read">Read?</label>
+                    <input type="checkbox" name="read" id="read">
+                </fieldset>
             </form>
         </section>
         <main class="library">
