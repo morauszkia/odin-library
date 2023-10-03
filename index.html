@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Library</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="index.js" defer></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>ODIN eLibrary</h1>
+        </header>
+        <section class="add-book">
+            <button>Add Book</button>
+
+            <form action="" class="add-form hidden">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author" class="">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" class="">
+                <label for="cover-url">Cover URL</label>
+                <input type="text" id="cover-url" name="cover-url" class="">
+                <label for="pages">Number of pages</label>
+                <input type="number" min="1" id="pages" name="pages" class="">
+                <label for="status">Status</label>
+                <select name="status" id="status">
+                    <option value="unread">Unread</option>
+                    <option value="tbr">To Be Read</option>
+                    <option value="tbr">Currently Reading</option>
+                    <option value="tbr">Read</option>
+                </select>
+            </form>
+        </section>
+        <main class="library">
+            <h2>Your Books</h2>
+            <ul class="container">
+            </ul>
+        </main>
+    </body>
+
+</html>
