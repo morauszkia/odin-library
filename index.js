@@ -121,7 +121,19 @@ const DUMMY_BOOKS = [
   },
 ];
 
-const library = DUMMY_BOOKS || [];
+const library =
+  DUMMY_BOOKS.map(
+    (book) =>
+      new Book(
+        book.author,
+        book.title,
+        book.coverUrl,
+        book.numPages,
+        book.read,
+        book.favorite
+      )
+  ) || [];
+console.log(library);
 
 function Book(author, title, coverUrl, numPages, read, favorite) {
   this.author = author;
@@ -135,8 +147,11 @@ function Book(author, title, coverUrl, numPages, read, favorite) {
 Book.prototype.createMarkup = function () {
   return `
     <li class="book ${this.favorite ? 'favorite' : ''}">
+      <div class="cover-container">
+        <img src="${this.coverUrl}" alt="cover of ${this.title}" />
+      </div>
       <h2 class="title">${this.title}</h2>
-      <p class="author"></p>
+      <p class="author">by ${this.author}</p>
       ${this.read && '<span>READ</span>'}
     </li>
   `;
@@ -152,7 +167,9 @@ Library.prototype.renderBook = function (markup) {
 };
 
 Library.prototype.renderAllBooks = function () {
-  this.books.forEach((book) => {});
+  this.books.forEach((book) => {
+    this.renderBook(book.createMarkup());
+  });
 };
 
 function addBookToLibrary(book) {
@@ -160,3 +177,5 @@ function addBookToLibrary(book) {
 }
 
 const myLibrary = new Library(library);
+
+myLibrary.renderAllBooks();
