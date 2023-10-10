@@ -148,7 +148,9 @@ Book.prototype.createMarkup = function () {
   return `
     <li class="book ${this.favorite ? 'favorite' : ''}">
       <div class="cover-container">
-        <img src="${this.coverUrl}" alt="cover of ${this.title}" />
+        <img src="${this.coverUrl}" alt="cover of ${
+    this.title
+  }" class="cover-img" />
       </div>
       <h2 class="title">${this.title}</h2>
       <p class="author">by ${this.author}</p>
