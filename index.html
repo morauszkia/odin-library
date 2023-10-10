@@ -10,21 +10,37 @@
     </head>
 
     <body>
-        <header>
-            <h1>ODIN eLibrary</h1>
+        <header class="header">
+            <div class="content header-content">
+                <h1 class="page-title">ODIN eLibrary</h1>
+                <button>Add Book</button>
+            </div>
         </header>
-        <section class="add-book">
-            <button>Add Book</button>
+        <main class="library-container">
+            <h2>Your Books</h2>
+            <ul class="library" id="library">
+            </ul>
+        </main>
 
-            <form action="" class="add-form hidden">
-                <label for="author">Author</label>
-                <input type="text" id="author" name="author" class="">
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" class="">
-                <label for="cover-url">Cover URL</label>
-                <input type="text" id="cover-url" name="cover-url" class="">
-                <label for="pages">Number of pages</label>
-                <input type="number" min="1" id="pages" name="pages" class="">
+        <div class="modal-overlay hidden"></div>
+        <section class="add-book hidden">
+            <form action="" class="add-form">
+                <div class="form-control">
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author" class="form-input">
+                </div>
+                <div class="form-control">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" class="form-input">
+                </div>
+                <div class="form-control">
+                    <label for="cover-url">Cover URL</label>
+                    <input type="text" id="cover-url" name="cover-url" class="form-input">
+                </div>
+                <div class="form-control">
+                    <label for="pages">Number of pages</label>
+                    <input type="number" min="1" id="pages" name="pages" class="form-input">
+                </div>
                 <fieldset>
                     <legend for="status">Status</legend>
                     <label for="read">Read?</label>
@@ -32,11 +48,6 @@
                 </fieldset>
             </form>
         </section>
-        <main class="library-container">
-            <h2>Your Books</h2>
-            <ul class="library" id="library">
-            </ul>
-        </main>
     </body>
 
 </html>
