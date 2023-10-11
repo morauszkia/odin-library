@@ -169,15 +169,24 @@ Library.prototype.renderBook = function (markup) {
 };
 
 Library.prototype.renderAllBooks = function () {
+  this.htmlElement.innerHTML = '';
   this.books.forEach((book) => {
     this.renderBook(book.createMarkup());
   });
 };
 
-function addBookToLibrary(book) {
-  library.push(book);
-}
+Library.prototype.addBookToLibrary = function (book) {
+  this.books = [...this.books, book];
+  this.renderBook(book.createMarkup());
+};
 
 const myLibrary = new Library(library);
 
 myLibrary.renderAllBooks();
+
+// TODO: Add book functionality
+// TODO: Delete functionality
+// TODO: Toggle read functionality
+// TODO: Toggle favorite
+// TODO: Filtering
+// TODO: Pagination
