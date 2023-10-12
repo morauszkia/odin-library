@@ -17,35 +17,39 @@
             </div>
         </header>
         <main class="library-container">
-            <h2 class="library-title">Your Books</h2>
+            <h2 class="library-title section-title">Your Books</h2>
             <ul class="library" id="library">
             </ul>
         </main>
 
         <div class="modal-overlay hidden"></div>
         <section class="add-book hidden">
+            <h2 class="form-title section-title">Add Book</h2>
+            <button type="button">X</button>
             <form action="" class="add-form">
                 <div class="form-control">
-                    <label for="author">Author</label>
+                    <label for="author" class="form-label">Author</label>
                     <input type="text" id="author" name="author" class="form-input">
                 </div>
                 <div class="form-control">
-                    <label for="title">Title</label>
+                    <label for="title" class="form-label">Title</label>
                     <input type="text" id="title" name="title" class="form-input">
                 </div>
                 <div class="form-control">
-                    <label for="cover-url">Cover URL</label>
+                    <label for="cover-url" class="form-label">Cover URL</label>
                     <input type="text" id="cover-url" name="cover-url" class="form-input">
                 </div>
                 <div class="form-control">
-                    <label for="pages">Number of pages</label>
+                    <label for="pages" class="form-label">Number of pages</label>
                     <input type="number" min="1" id="pages" name="pages" class="form-input">
                 </div>
-                <fieldset>
+                <fieldset class="form-field">
                     <legend for="status">Status</legend>
-                    <label for="read">Read?</label>
-                    <input type="checkbox" name="read" id="read">
+                    <label for="read" class="form-label">Read?</label>
+                    <input type="checkbox" name="read" id="read" class="form-input--checkbox">
                 </fieldset>
+                <button type="submit">Submit</button>
+                <button type="button">Cancel</button>
             </form>
         </section>
     </body>

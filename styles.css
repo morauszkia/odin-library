@@ -76,7 +76,7 @@ body {
   margin-top: calc(var(--header-height) + 1.2rem);
 }
 
-.library-title {
+.section-title {
   font-size: 3.6rem;
   text-transform: uppercase;
   font-family: 'Skranji', 'Montserrat', sans-serif;
@@ -134,9 +134,22 @@ body {
 .form-control {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 2.4rem;
 }
 
+.form-input {
+  font: inherit;
+  font-size: 1.6rem;
+  padding: 1.2rem 2.4rem;
+  border: none;
+  width: 40rem;
+}
+
+.form-input:focus {
+  outline: 1px solid var(--main-color);
+}
+
 .hidden {
-  display: none;
+  /* display: none; */
 }
