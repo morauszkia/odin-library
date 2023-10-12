@@ -13,7 +13,7 @@
         <header class="header">
             <div class="content header-content">
                 <h1 class="page-title">ODIN eLibrary</h1>
-                <button class="btn">Add Book</button>
+                <button class="btn btn--full" id="add">Add Book</button>
             </div>
         </header>
         <main class="library-container">
@@ -28,8 +28,8 @@
                 alt="Hand reaching toward bookshelf" class="form-img">
             <div class="form-content">
                 <h2 class="form-title section-title">Add Book</h2>
-                <button type="button" class="cancel-btn">&times;</button>
-                <form action="" class="add-form">
+                <button type="button" class="cancel-btn" id="cancel-sm">&times;</button>
+                <form class="add-form">
                     <div class="form-control">
                         <label for="author" class="form-label">Author</label>
                         <input type="text" id="author" name="author" class="form-input">
@@ -52,8 +52,8 @@
                         <input type="checkbox" name="read" id="read" class="form-input--checkbox">
                     </fieldset>
                     <div class="actions">
-                        <button type="submit" class="btn">Submit</button>
-                        <button type="button" class="btn">Cancel</button>
+                        <button type="submit" class="btn btn--full">Submit</button>
+                        <button type="button" class="btn btn--outline" id="cancel">Cancel</button>
                     </div>
                 </form>
             </div>

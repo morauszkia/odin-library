@@ -121,6 +121,39 @@ const DUMMY_BOOKS = [
   },
 ];
 
+// DOM ELEMENTS
+const addBookBtn = document.getElementById('add');
+const cancelBtn = document.getElementById('cancel');
+const cancelBtnSmall = document.getElementById('cancel-sm');
+const backdrop = document.querySelector('.modal-overlay');
+const formContainer = document.querySelector('.add-book');
+const addBookForm = document.querySelector('.add-form');
+
+// FUNCTIONS FOR DOM MANIPULATION
+const openAddForm = () => {
+  backdrop.classList.remove('hidden');
+  formContainer.classList.remove('hidden');
+};
+
+const closeAddForm = () => {
+  backdrop.classList.add('hidden');
+  formContainer.classList.add('hidden');
+};
+
+const submitAddForm = (e) => {
+  e.preventDefault();
+
+  closeAddForm();
+};
+
+// EVENT LISTENERS
+addBookBtn.addEventListener('click', openAddForm);
+cancelBtn.addEventListener('click', closeAddForm);
+cancelBtnSmall.addEventListener('click', closeAddForm);
+backdrop.addEventListener('click', closeAddForm);
+
+addBookForm.addEventListener('submit', submitAddForm);
+
 const library =
   DUMMY_BOOKS.map(
     (book) =>
@@ -133,7 +166,6 @@ const library =
         book.favorite
       )
   ) || [];
-console.log(library);
 
 function Book(author, title, coverUrl, numPages, read, favorite) {
   this.author = author;
