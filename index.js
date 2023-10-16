@@ -14,7 +14,7 @@ const DUMMY_BOOKS = [
     author: 'J.R.R. Tolkien',
     title: 'The Silmarillion',
     coverUrl:
-      'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1610045590i/7332.jpg',
+      'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1585155387i/52699258.jpg',
     numPages: 386,
     read: true,
     favorite: true,
@@ -72,7 +72,7 @@ const DUMMY_BOOKS = [
   {
     id: 'b8',
     author: 'George R.R. Martin',
-    title: 'A Dance with Dragosn',
+    title: 'A Dance with Dragons',
     coverUrl:
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1581625286i/10664113.jpg',
     numPages: 1125,
@@ -179,14 +179,20 @@ function Book(author, title, coverUrl, numPages, read, favorite) {
 Book.prototype.createMarkup = function () {
   return `
     <li class="book ${this.favorite ? 'favorite' : ''}">
+    ${
+      this.coverUrl
+        ? `
       <div class="cover-container">
-        <img src="${this.coverUrl}" alt="cover of ${
-    this.title
-  }" class="cover-img" />
+        <img src="${this.coverUrl}" alt="cover of ${this.title}" class="cover-img" />
       </div>
-      <h2 class="title">${this.title}</h2>
-      <p class="author">by ${this.author}</p>
-      ${this.read && '<span>READ</span>'}
+      `
+        : ''
+    }
+      <div class="book-info">
+        <h2 class="title">${this.title}</h2>
+        <p class="author">by ${this.author}</p>
+      </div>
+      ${this.read ? '<span>READ</span>' : ''}
     </li>
   `;
 };

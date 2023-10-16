@@ -2,6 +2,7 @@
 
 :root {
   --main-color: #0369a1;
+  --main-color-transparent: rgba(3, 105, 161, 0.5);
   --accent-color: #fcd34d;
   --background-color: #f5f5f4;
   --background-color-light: #fafaf9;
@@ -98,24 +99,63 @@ body {
 
 .library {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  gap: 4.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.8rem;
 }
 
 .book {
   overflow: hidden;
-  height: 50rem;
+  width: 20rem;
+  height: 30rem;
+  position: relative;
+  aspect-ratio: 2 / 3;
+  perspective: 150rem;
+  -moz-perspective: 150rem;
 }
 
 .cover-container {
-  height: 80%;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .cover-img {
   object-fit: cover;
   height: 100%;
   width: 100%;
+  transition: all 0.5s;
+}
+
+.book-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--main-color-transparent);
+
+  transform: rotateY(180deg);
+
+  backface-visibility: hidden;
+
+  transition: all 0.5s;
+}
+
+.book:hover .cover-img {
+  transform: rotateY(-180deg);
+}
+
+.book:hover .book-info {
+  transform: rotateY(0deg);
 }
 
 .modal-overlay {
@@ -129,6 +169,7 @@ body {
 }
 
 .add-book {
+  width: min(90vw, 80rem);
   position: fixed;
   top: 50%;
   left: 50%;
