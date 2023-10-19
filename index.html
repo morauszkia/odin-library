@@ -47,9 +47,19 @@
                         <input type="number" min="1" id="pages" name="pages" class="form-input">
                     </div>
                     <fieldset class="form-field">
-                        <legend for="status">Status</legend>
-                        <label for="read" class="form-label">Read?</label>
-                        <input type="checkbox" name="read" id="read" class="form-input--checkbox">
+                        <!-- <legend for="status">Status</legend> -->
+                        <div class="form-control--checkbox">
+                            <input type="checkbox" name="read" id="read" class="form-input--checkbox">
+                            <label for="read" class="form-label">Read?</label>
+                        </div>
+                        <div class="form-control--checkbox">
+                            <input type="checkbox" name="read" id="read" class="form-input--checkbox">
+                            <label for="read" class="form-label">Currently reading?</label>
+                        </div>
+                        <div class="form-control--checkbox">
+                            <input type="checkbox" name="read" id="read" class="form-input--checkbox">
+                            <label for="read" class="form-label">Favorite?</label>
+                        </div>
                     </fieldset>
                     <div class="actions">
                         <button type="submit" class="btn btn--full">Submit</button>
