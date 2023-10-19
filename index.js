@@ -7,6 +7,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1566425108i/33.jpg',
     numPages: 1216,
     read: true,
+    currentlyReading: false,
     favorite: true,
   },
   {
@@ -17,6 +18,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1585155387i/52699258.jpg',
     numPages: 386,
     read: true,
+    currentlyReading: false,
     favorite: true,
   },
   {
@@ -27,6 +29,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1546071216i/5907.jpg',
     numPages: 366,
     read: true,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -37,6 +40,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327110509i/11059675.jpg',
     numPages: 819,
     read: true,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -47,6 +51,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1567840212i/10572.jpg',
     numPages: 784,
     read: true,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -57,6 +62,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1427885895i/6307964.jpg',
     numPages: 1178,
     read: true,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -67,6 +73,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1661026821i/13497.jpg',
     numPages: 1060,
     read: true,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -77,6 +84,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1581625286i/10664113.jpg',
     numPages: 1125,
     read: true,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -87,6 +95,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1516128292i/37903770.jpg',
     numPages: 301,
     read: false,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -97,6 +106,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1410685056i/5975933.jpg',
     numPages: 252,
     read: false,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -107,6 +117,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1434701340i/15724396.jpg',
     numPages: 512,
     read: false,
+    currentlyReading: false,
     favorite: false,
   },
   {
@@ -117,6 +128,7 @@ const DUMMY_BOOKS = [
       'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1593104643i/53438195.jpg',
     numPages: 359,
     read: false,
+    currentlyReading: false,
     favorite: false,
   },
 ];
@@ -167,12 +179,21 @@ const library =
       )
   ) || [];
 
-function Book(author, title, coverUrl, numPages, read, favorite) {
+function Book(
+  author,
+  title,
+  coverUrl,
+  numPages,
+  read,
+  currentlyReading,
+  favorite
+) {
   this.author = author;
   this.title = title;
-  this.coverUrl = coverUrl;
+  this.coverUrl = coverUrl || null;
   this.numPages = numPages;
   this.read = read;
+  this.currentlyReading = currentlyReading;
   this.favorite = favorite;
 }
 
@@ -182,17 +203,24 @@ Book.prototype.createMarkup = function () {
     ${
       this.coverUrl
         ? `
-      <div class="cover-container">
+      <div class="cover-container card-side">
         <img src="${this.coverUrl}" alt="cover of ${this.title}" class="cover-img" />
       </div>
       `
         : ''
     }
-      <div class="book-info">
+      <div class="book-info card-side ${this.coverUrl ? '' : 'showing'}">
         <h2 class="title">${this.title}</h2>
         <p class="author">by ${this.author}</p>
+        <div class="status-badges">
+          ${this.read ? '<p class="status-badge badge--read">READ</p>' : ''}
+          ${
+            this.favorite
+              ? '<p class="status-badge badge--favorite">FAVORITE</p>'
+              : ''
+          }
+        </div>
       </div>
-      ${this.read ? '<span>READ</span>' : ''}
     </li>
   `;
 };

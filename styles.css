@@ -32,6 +32,7 @@ body {
   font-family: 'Montserrat';
   font-size: 1.6rem;
   color: var(--text-color-dark);
+  background-color: var(--main-color);
 }
 
 .header {
@@ -42,6 +43,7 @@ body {
   height: var(--header-height);
   width: 100vw;
   padding: 0 3.2rem;
+  z-index: 100;
 
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 
@@ -52,6 +54,7 @@ body {
 
 .content {
   width: min(90%, 1200px);
+  padding: 0 2.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -85,8 +88,18 @@ body {
 
 .library-container {
   width: min(90%, 1200px);
+  height: calc(100vh - var(--header-height));
   margin: 0 auto;
-  margin-top: calc(var(--header-height) + 1.2rem);
+  /* margin-top: calc(var(--header-height) + 1.2rem); */
+  margin-top: var(--header-height);
+  padding: 0 7.2rem;
+  background-color: var(--background-color-light);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow-y: scroll;
 }
 
 .section-title {
@@ -94,17 +107,20 @@ body {
   text-transform: uppercase;
   font-family: 'Skranji', 'Montserrat', sans-serif;
   text-align: center;
+  padding: 1.2rem 0;
   margin-bottom: 1.6rem;
 }
 
 .library {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  align-items: center;
+  justify-items: center;
   gap: 1.8rem;
+  width: 100%;
 }
 
 .book {
-  overflow: hidden;
   width: 20rem;
   height: 30rem;
   position: relative;
@@ -113,49 +129,57 @@ body {
   -moz-perspective: 150rem;
 }
 
-.cover-container {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+.card-side {
   position: absolute;
   top: 0;
   left: 0;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+  backface-visibility: hidden;
+  transition: all 1s;
+}
+
+.cover-container {
+  overflow: hidden;
 }
 
 .cover-img {
   object-fit: cover;
   height: 100%;
   width: 100%;
-  transition: all 0.5s;
 }
 
 .book-info {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  background-color: var(--main-color-transparent);
+  background-color: var(--main-color);
+  color: var(--background-color);
+  padding: 2.4rem;
 
   transform: rotateY(180deg);
-
-  backface-visibility: hidden;
-
-  transition: all 0.5s;
 }
 
-.book:hover .cover-img {
+.book-info.showing {
+  transform: rotateY(0deg);
+}
+
+.book:hover .cover-container {
   transform: rotateY(-180deg);
 }
 
 .book:hover .book-info {
   transform: rotateY(0deg);
+}
+
+.title,
+.author,
+.status-badges {
+  text-align: center;
 }
 
 .modal-overlay {
