@@ -267,6 +267,26 @@ body {
   outline: 2px solid var(--main-color);
 }
 
+.form-field {
+  padding: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  border: none;
+}
+
+input[type='checkbox']:empty + label:after {
+  content: '?';
+}
+
+input[type='checkbox']:checked + label {
+  color: var(--main-color);
+}
+
+input[type='checkbox']:checked + label:after {
+  content: '';
+}
+
 .hidden {
   display: none;
 }
