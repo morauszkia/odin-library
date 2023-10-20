@@ -71,7 +71,7 @@ body {
   font-weight: 500;
   letter-spacing: 1px;
   padding: 0.8rem 2.4rem;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
   border: 2px solid var(--main-color);
 }
@@ -123,8 +123,9 @@ body {
 .book {
   width: 20rem;
   height: 30rem;
-  position: relative;
   aspect-ratio: 2 / 3;
+
+  position: relative;
   perspective: 150rem;
   -moz-perspective: 150rem;
 }
@@ -136,6 +137,7 @@ body {
   height: 100%;
   width: 100%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
 
   backface-visibility: hidden;
   transition: all 1s;
@@ -156,10 +158,11 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2.4rem;
 
   background-color: var(--main-color);
   color: var(--background-color);
-  padding: 2.4rem;
+  padding: 1.6rem;
 
   transform: rotateY(180deg);
 }
@@ -178,8 +181,70 @@ body {
 
 .title,
 .author,
+.pages,
 .status-badges {
   text-align: center;
+}
+
+.title {
+  font-size: 1.8rem;
+  color: var(--background-color-light);
+}
+
+.author {
+  font-size: 1.6rem;
+}
+
+.status-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.status-badge,
+.delete {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  background-color: var(--border-color);
+  color: var(--background-color-light);
+  padding: 0.4rem 1.6rem;
+  border-radius: 100px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+
+  cursor: pointer;
+}
+
+.status-icon,
+.action-icon {
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.badge--read {
+  background-color: #991b1b;
+}
+
+.badge--read.active {
+  background-color: #166534;
+}
+
+.badge--reading.active {
+  background-color: #38bdf8;
+  color: var(--text-color-dark);
+}
+
+.badge--favorite.active {
+  background-color: #fbbf24;
+  color: var(--text-color-dark);
+}
+
+.delete {
+  background-color: #991b1b;
+  border: none;
 }
 
 .modal-overlay {
@@ -257,7 +322,7 @@ body {
 .form-input {
   font: inherit;
   font-size: 1.6rem;
-  padding: 1.2rem 2.4rem;
+  padding: 1.2rem;
   border: none;
   flex-grow: 1;
   border: 1px solid var(--border-color);
