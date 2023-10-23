@@ -224,10 +224,6 @@ body {
   width: 1.8rem;
 }
 
-.badge--read {
-  background-color: #991b1b;
-}
-
 .badge--read.active {
   background-color: #166534;
 }
