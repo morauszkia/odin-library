@@ -207,8 +207,10 @@ const handleBadgeClick = (event) => {
   const propertyToToggle = badgeEl.dataset.property;
 
   book.toggleProperty(propertyToToggle);
-  badgeEl.classList.toggle('active');
-  console.log(badgeEl.querySelector('.badge-text'));
+  Book.updateBadges(bookEl);
+  Book.addBadgeHandlers(bookEl);
+  // badgeEl.classList.toggle('active');
+  // console.log(badgeEl.querySelector('.badge-text'));
 };
 
 // EVENT LISTENERS
@@ -254,63 +256,95 @@ function Book(
   this.favorite = favorite;
 }
 
-Book.prototype.createMarkup = function () {
-  return `
-    <li class="book" data-id=${this.id} >
-    ${
-      this.coverUrl
-        ? `
-      <div class="cover-container card-side">
-        <img src="${this.coverUrl}" alt="cover of ${this.title}" class="cover-img" />
+Book.createBookElement = function (bookInfo) {
+  const bookEl = document.createElement('li');
+  bookEl.classList.add('book');
+  bookEl.dataset.id = bookInfo.id;
+  const bookElContent = `
+  ${
+    bookInfo.coverUrl
+      ? `
+    <div class="cover-container card-side">
+      <img src="${bookInfo.coverUrl}" alt="cover of ${bookInfo.title}" class="cover-img" />
+    </div>
+    `
+      : ''
+  }
+    <div class="book-info card-side ${bookInfo.coverUrl ? '' : 'showing'}">
+      <div class="book-info-main">
+        <p class="author">${bookInfo.author}</p>
+        <h2 class="title">${bookInfo.title}</h2>
+        <p class="pages">${bookInfo.numPages} pages</p>
       </div>
-      `
-        : ''
-    }
-      <div class="book-info card-side ${this.coverUrl ? '' : 'showing'}">
-        <div class="book-info-main">
-          <p class="author">${this.author}</p>
-          <h2 class="title">${this.title}</h2>
-          <p class="pages">${this.numPages} pages</p>
-        </div>
-        <div class="status-badges">
-          <div class="status-badge badge--read ${
-            this.read ? 'active' : ''
-          }" data-property="read">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="status-icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <div class="status-badge badge--reading ${
-            this.currentlyReading ? 'active' : ''
-          }" data-property="currentlyReading">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="status-icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-            </svg>
-          </div>
-          <div class="status-badge badge--favorite ${
-            this.favorite ? 'active' : ''
-          }" data-property="favorite">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="status-icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-            </svg>
-          </div>
-        </div>
-        <div class="action">
-          <button class="delete">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="action-icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-            </svg>
-            DELETE
-          </button>
-        </div>
+      <div class="status-badges">
       </div>
-    </li>
+      <div class="action">
+        <button class="delete">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="action-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+          </svg>
+          DELETE
+        </button>
+      </div>
+    </div>
   `;
+
+  bookEl.innerHTML = bookElContent;
+  Book.updateBadges(bookEl, bookInfo);
+  Book.addBadgeHandlers(bookEl);
+  Book.addDeleteHandler(bookEl);
+
+  return bookEl;
 };
 
 Book.prototype.toggleProperty = function (property) {
-  console.log(this[property]);
   this[property] = !this[property];
+};
+
+Book.updateBadges = function (bookEl, bookInfo = null) {
+  if (!bookInfo) {
+    bookInfo = myLibrary.books.find((book) => book.id === bookEl.dataset.id);
+  }
+  const newBadges = `
+    <div class="status-badge badge--read ${
+      bookInfo.read ? 'active' : ''
+    }" data-property="read">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="status-icon">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p>
+        ${bookInfo.read ? 'READ' : 'UNREAD'}
+      </p>
+    </div>
+    <div class="status-badge badge--reading ${
+      bookInfo.currentlyReading ? 'active' : ''
+    }" data-property="currentlyReading">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="status-icon">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+      </svg>
+      ${bookInfo.currentlyReading ? '<p>READING NOW</p>' : ''}
+    </div>
+    <div class="status-badge badge--favorite ${
+      bookInfo.favorite ? 'active' : ''
+    }" data-property="favorite">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="status-icon">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+      </svg>
+      ${bookInfo.favorite ? '<p>FAVORITE</p>' : ''}
+    </div>
+  `;
+
+  bookEl.querySelector('.status-badges').innerHTML = newBadges;
+};
+
+Book.addBadgeHandlers = function (bookEl) {
+  bookEl
+    .querySelectorAll('.status-badge')
+    .forEach((badge) => badge.addEventListener('click', handleBadgeClick));
+};
+
+Book.addDeleteHandler = function (bookEl) {
+  bookEl.querySelector('button.delete').addEventListener('click', deleteBook);
 };
 
 function Library(books) {
@@ -319,8 +353,8 @@ function Library(books) {
 }
 
 Library.prototype.renderBook = function (book) {
-  const markup = book.createMarkup();
-  this.htmlElement.insertAdjacentHTML('beforeend', markup);
+  const newBookEl = Book.createBookElement(book);
+  this.htmlElement.appendChild(newBookEl);
 };
 
 Library.prototype.renderAllBooks = function () {
@@ -344,18 +378,11 @@ const myLibrary = new Library(library);
 myLibrary.renderAllBooks();
 
 // BOOK BADGES & BUTTONS
-const badges = document.querySelectorAll('.status-badge');
-const readBadges = document.querySelectorAll('.badge--read');
-const readingBadges = document.querySelectorAll('.badge--reading');
-const favoriteBadges = document.querySelectorAll('.badge--favorite');
 const deleteButtons = document.querySelectorAll('button.delete');
 
 deleteButtons.forEach((btn) => btn.addEventListener('click', deleteBook));
-badges.forEach((badge) => badge.addEventListener('click', handleBadgeClick));
 
 // TODO: Confirmation modal before delete
-// TODO: Toggle read functionality
-// TODO: Toggle favorite
-// TODO: Toggle currently reading
+// TODO: Book Element as class
 // TODO: Filtering
 // TODO: Pagination
