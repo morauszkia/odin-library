@@ -196,7 +196,8 @@ const deleteBook = (event) => {
 
   myLibrary.removeBookFromLibrary(bookId);
 
-  bookEl.remove();
+  if (window.confirm('Are you sure you want to delete this book?'))
+    bookEl.remove();
 };
 
 const handleBadgeClick = (event) => {
@@ -209,8 +210,6 @@ const handleBadgeClick = (event) => {
   book.toggleProperty(propertyToToggle);
   Book.updateBadges(bookEl);
   Book.addBadgeHandlers(bookEl);
-  // badgeEl.classList.toggle('active');
-  // console.log(badgeEl.querySelector('.badge-text'));
 };
 
 // EVENT LISTENERS
@@ -376,11 +375,6 @@ Library.prototype.removeBookFromLibrary = function (id) {
 const myLibrary = new Library(library);
 
 myLibrary.renderAllBooks();
-
-// BOOK BADGES & BUTTONS
-const deleteButtons = document.querySelectorAll('button.delete');
-
-deleteButtons.forEach((btn) => btn.addEventListener('click', deleteBook));
 
 // TODO: Confirmation modal before delete
 // TODO: Book Element as class
