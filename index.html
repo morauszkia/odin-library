@@ -26,7 +26,8 @@
         <dialog class="add-book hidden">
             <img src="https://images.unsplash.com/photo-1614849963640-9cc74b2a826f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
                 alt="Hand reaching toward bookshelf" class="form-img">
-            <div class="form-content">
+
+            <div class="form-content hidden" id="add-form">
                 <h2 class="form-title section-title">Add Book</h2>
                 <button type="button" class="cancel-btn" id="cancel-sm">&times;</button>
                 <form class="add-form">
@@ -64,6 +65,27 @@
                     <div class="actions">
                         <button type="submit" class="btn btn--full">Submit</button>
                         <button type="button" class="btn btn--outline" id="cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-content" id="search-form">
+                <h2 class="form-title section-title">Search Book</h2>
+                <button type="button" class="cancel-btn" id="cancel-sm">&times;</button>
+                <form class="book-form">
+                    <div class="form-control">
+                        <label for="author" class="form-label">Author</label>
+                        <input type="text" id="sauthor" name="author" class="form-input">
+                    </div>
+                    <div class="form-control">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" id="stitle" name="title" class="form-input">
+                    </div>
+                    </fieldset>
+                    <div class="actions">
+                        <button type="submit" class="btn btn--full">Search</button>
+                        <button type="reset" class="btn btn--outline">Clear form</button>
+                        <button type="button" class="btn btn--outline" id="scancel">Cancel</button>
                     </div>
                 </form>
             </div>

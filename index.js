@@ -137,6 +137,7 @@ const DUMMY_BOOKS = [
 // RELATED TO FORM
 const addBookBtn = document.getElementById('add');
 const cancelBtn = document.getElementById('cancel');
+const searchCancelBtn = document.getElementById('scancel');
 const cancelBtnSmall = document.getElementById('cancel-sm');
 const backdrop = document.querySelector('.modal-overlay');
 const formContainer = document.querySelector('.add-book');
@@ -215,6 +216,7 @@ const handleBadgeClick = (event) => {
 // EVENT LISTENERS
 addBookBtn.addEventListener('click', openAddForm);
 cancelBtn.addEventListener('click', closeAddForm);
+searchCancelBtn.addEventListener('click', closeAddForm);
 cancelBtnSmall.addEventListener('click', closeAddForm);
 backdrop.addEventListener('click', closeAddForm);
 
