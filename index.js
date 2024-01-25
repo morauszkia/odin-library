@@ -140,8 +140,12 @@ const cancelBtn = document.getElementById('cancel');
 const searchCancelBtn = document.getElementById('scancel');
 const cancelBtnSmall = document.getElementById('cancel-sm');
 const backdrop = document.querySelector('.modal-overlay');
-const formContainer = document.querySelector('.add-book');
-const addBookForm = document.querySelector('.add-form');
+const formDialog = document.querySelector('.add-book');
+const addBookFormContainer = document.getElementById('add-container');
+const addBookForm = document.getElementById('add-form');
+const searchBookFormContainer = document.getElementById('search-container');
+const searchForm = document.getElementById('search-form');
+const addManuallyBtn = document.getElementById('manual');
 
 // FORM INPUTS
 const textInputEls = addBookForm.querySelectorAll('input[type="text"]');
@@ -155,14 +159,33 @@ const readingInputEl = document.getElementById('reading');
 const favoriteInputEl = document.getElementById('favorite');
 
 // FUNCTIONS FOR DOM MANIPULATION
-const openAddForm = () => {
-  backdrop.classList.remove('hidden');
-  formContainer.classList.remove('hidden');
+
+// HIDE AND UNHIDE
+const unhide = (element) => {
+  element.classList.remove('hidden');
 };
 
-const closeAddForm = () => {
-  backdrop.classList.add('hidden');
-  formContainer.classList.add('hidden');
+const hide = (element) => {
+  element.classList.add('hidden');
+};
+
+// DIALOG WITH FORMS
+
+const openDialog = () => {
+  unhide(backdrop);
+  unhide(formDialog);
+};
+
+const closeDialog = () => {
+  hide(backdrop);
+  hide(formDialog);
+  unhide(searchBookFormContainer);
+  hide(addBookFormContainer);
+};
+
+const switchForms = () => {
+  hide(searchBookFormContainer);
+  unhide(addBookFormContainer);
 };
 
 const clearAddForm = () => {
@@ -188,8 +211,10 @@ const submitAddForm = (e) => {
   myLibrary.addBookToLibrary(newBook);
 
   clearAddForm();
-  closeAddForm();
+  closeDialog();
 };
+
+// HANDLE BOOKS
 
 const deleteBook = (event) => {
   const bookEl = event.target.closest('.book');
@@ -214,11 +239,12 @@ const handleBadgeClick = (event) => {
 };
 
 // EVENT LISTENERS
-addBookBtn.addEventListener('click', openAddForm);
-cancelBtn.addEventListener('click', closeAddForm);
-searchCancelBtn.addEventListener('click', closeAddForm);
-cancelBtnSmall.addEventListener('click', closeAddForm);
-backdrop.addEventListener('click', closeAddForm);
+addBookBtn.addEventListener('click', openDialog);
+cancelBtn.addEventListener('click', closeDialog);
+searchCancelBtn.addEventListener('click', closeDialog);
+cancelBtnSmall.addEventListener('click', closeDialog);
+backdrop.addEventListener('click', closeDialog);
+addManuallyBtn.addEventListener('click', switchForms);
 
 addBookForm.addEventListener('submit', submitAddForm);
 

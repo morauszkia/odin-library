@@ -22,15 +22,19 @@
             </ul>
         </main>
 
+        <footer>
+
+        </footer>
+
         <div class="modal-overlay hidden"></div>
         <dialog class="add-book hidden">
             <img src="https://images.unsplash.com/photo-1614849963640-9cc74b2a826f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
                 alt="Hand reaching toward bookshelf" class="form-img">
+            <button type="button" class="cancel-btn" id="cancel-sm">&times;</button>
 
-            <div class="form-content hidden" id="add-form">
+            <div class="form-content hidden" id="add-container">
                 <h2 class="form-title section-title">Add Book</h2>
-                <button type="button" class="cancel-btn" id="cancel-sm">&times;</button>
-                <form class="add-form">
+                <form class="book-form" id="add-form">
                     <div class="form-control">
                         <label for="author" class="form-label">Author</label>
                         <input type="text" id="author" name="author" class="form-input">
@@ -69,10 +73,9 @@
                 </form>
             </div>
 
-            <div class="form-content" id="search-form">
+            <div class="form-content" id="search-container">
                 <h2 class="form-title section-title">Search Book</h2>
-                <button type="button" class="cancel-btn" id="cancel-sm">&times;</button>
-                <form class="book-form">
+                <form class="book-form" id="search-form">
                     <div class="form-control">
                         <label for="author" class="form-label">Author</label>
                         <input type="text" id="sauthor" name="author" class="form-input">
@@ -84,7 +87,7 @@
                     </fieldset>
                     <div class="actions">
                         <button type="submit" class="btn btn--full">Search</button>
-                        <button type="reset" class="btn btn--outline">Clear form</button>
+                        <button type="button" class="btn btn--outline" id="manual">Add Manually</button>
                         <button type="button" class="btn btn--outline" id="scancel">Cancel</button>
                     </div>
                 </form>
