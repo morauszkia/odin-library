@@ -220,46 +220,32 @@ backdrop.addEventListener('click', closeAddForm);
 
 addBookForm.addEventListener('submit', submitAddForm);
 
-const library =
-  DUMMY_BOOKS.map(
-    (book) =>
-      new Book(
-        book.author,
-        book.title,
-        book.coverUrl,
-        book.numPages,
-        book.read,
-        book.currentlyReading,
-        book.favorite,
-        book.id
-      )
-  ) || [];
+class Book {
+  constructor(
+    author,
+    title,
+    coverUrl,
+    numPages,
+    read,
+    currentlyReading,
+    favorite,
+    id
+  ) {
+    this.id = id;
+    this.author = author;
+    this.title = title;
+    this.coverUrl = coverUrl || null;
+    this.numPages = numPages;
+    this.read = read;
+    this.currentlyReading = currentlyReading;
+    this.favorite = favorite;
+  }
 
-function Book(
-  author,
-  title,
-  coverUrl,
-  numPages,
-  read,
-  currentlyReading,
-  favorite,
-  id
-) {
-  this.id = id;
-  this.author = author;
-  this.title = title;
-  this.coverUrl = coverUrl || null;
-  this.numPages = numPages;
-  this.read = read;
-  this.currentlyReading = currentlyReading;
-  this.favorite = favorite;
-}
-
-Book.createBookElement = function (bookInfo) {
-  const bookEl = document.createElement('li');
-  bookEl.classList.add('book');
-  bookEl.dataset.id = bookInfo.id;
-  const bookElContent = `
+  static createBookElement = function (bookInfo) {
+    const bookEl = document.createElement('li');
+    bookEl.classList.add('book');
+    bookEl.dataset.id = bookInfo.id;
+    const bookElContent = `
   ${
     bookInfo.coverUrl
       ? `
@@ -288,23 +274,23 @@ Book.createBookElement = function (bookInfo) {
     </div>
   `;
 
-  bookEl.innerHTML = bookElContent;
-  Book.updateBadges(bookEl, bookInfo);
-  Book.addBadgeHandlers(bookEl);
-  Book.addDeleteHandler(bookEl);
+    bookEl.innerHTML = bookElContent;
+    Book.updateBadges(bookEl, bookInfo);
+    Book.addBadgeHandlers(bookEl);
+    Book.addDeleteHandler(bookEl);
 
-  return bookEl;
-};
+    return bookEl;
+  };
 
-Book.prototype.toggleProperty = function (property) {
-  this[property] = !this[property];
-};
+  toggleProperty = function (property) {
+    this[property] = !this[property];
+  };
 
-Book.updateBadges = function (bookEl, bookInfo = null) {
-  if (!bookInfo) {
-    bookInfo = myLibrary.books.find((book) => book.id === bookEl.dataset.id);
-  }
-  const newBadges = `
+  static updateBadges = function (bookEl, bookInfo = null) {
+    if (!bookInfo) {
+      bookInfo = myLibrary.books.find((book) => book.id === bookEl.dataset.id);
+    }
+    const newBadges = `
     <div class="status-badge badge--read ${
       bookInfo.read ? 'active' : ''
     }" data-property="read">
@@ -333,44 +319,62 @@ Book.updateBadges = function (bookEl, bookInfo = null) {
     </div>
   `;
 
-  bookEl.querySelector('.status-badges').innerHTML = newBadges;
-};
+    bookEl.querySelector('.status-badges').innerHTML = newBadges;
+  };
 
-Book.addBadgeHandlers = function (bookEl) {
-  bookEl
-    .querySelectorAll('.status-badge')
-    .forEach((badge) => badge.addEventListener('click', handleBadgeClick));
-};
+  static addBadgeHandlers = function (bookEl) {
+    bookEl
+      .querySelectorAll('.status-badge')
+      .forEach((badge) => badge.addEventListener('click', handleBadgeClick));
+  };
 
-Book.addDeleteHandler = function (bookEl) {
-  bookEl.querySelector('button.delete').addEventListener('click', deleteBook);
-};
-
-function Library(books) {
-  this.books = books;
-  this.htmlElement = document.getElementById('library');
+  static addDeleteHandler = function (bookEl) {
+    bookEl.querySelector('button.delete').addEventListener('click', deleteBook);
+  };
 }
 
-Library.prototype.renderBook = function (book) {
-  const newBookEl = Book.createBookElement(book);
-  this.htmlElement.appendChild(newBookEl);
-};
+const library =
+  DUMMY_BOOKS.map(
+    (book) =>
+      new Book(
+        book.author,
+        book.title,
+        book.coverUrl,
+        book.numPages,
+        book.read,
+        book.currentlyReading,
+        book.favorite,
+        book.id
+      )
+  ) || [];
 
-Library.prototype.renderAllBooks = function () {
-  this.htmlElement.innerHTML = '';
-  this.books.forEach((book) => {
+class Library {
+  constructor(books) {
+    this.books = books;
+    this.htmlElement = document.getElementById('library');
+  }
+
+  renderBook = function (book) {
+    const newBookEl = Book.createBookElement(book);
+    this.htmlElement.appendChild(newBookEl);
+  };
+
+  renderAllBooks = function () {
+    this.htmlElement.innerHTML = '';
+    this.books.forEach((book) => {
+      this.renderBook(book);
+    });
+  };
+
+  addBookToLibrary = function (book) {
+    this.books = [...this.books, book];
     this.renderBook(book);
-  });
-};
+  };
 
-Library.prototype.addBookToLibrary = function (book) {
-  this.books = [...this.books, book];
-  this.renderBook(book);
-};
-
-Library.prototype.removeBookFromLibrary = function (id) {
-  this.books = this.books.filter((book) => book.id !== id);
-};
+  removeBookFromLibrary = function (id) {
+    this.books = this.books.filter((book) => book.id !== id);
+  };
+}
 
 const myLibrary = new Library(library);
 
